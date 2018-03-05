@@ -12,6 +12,8 @@
 #include <TFile.h>
 #include <TDirectory.h>
 
+#include "G4SystemOfUnits.hh"
+
 
 class G4Run;
 class G4Event;

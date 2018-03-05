@@ -7,6 +7,7 @@
 #include <fstream>
 #include <vector>
 #include "G4ios.hh"
+#include "G4SystemOfUnits.hh"
 
 PadCentralData* PadCentralData::fPointer = 0;
 

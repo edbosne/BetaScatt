@@ -27,7 +27,7 @@
 #endif
 
 void WriteHelp() {
-  G4cout << "Usage: Pad <input-file> <output-path>" << G4endl << G4endl;
+  G4cout << "Usage: BetaScat <input-file> <output-path>" << G4endl << G4endl;
   G4cout << "This program simulates the scattering of electrons in" << G4endl;
   G4cout << "the emission channeling setups of IKS and ITN." << G4endl << G4endl;
   
@@ -61,7 +61,7 @@ std::cout << " begin program! " << std::endl;
 #ifdef GDEBUG
 std::cout << " help text. " << std::endl;
 #endif
-//std::cout << " begin program! " << std::endl;
+
   // Construct default run manager
   G4RunManager* runManager = new G4RunManager;
 
@@ -109,7 +109,7 @@ std::cout << " Set user initialization " << std::endl;
 #endif
 
   // Mandatory user action class
-  runManager->SetUserAction(new PadPrimaryGeneratorAction(dataObject,analysisManager));
+  runManager->SetUserAction(new PadPrimaryGeneratorAction(dataObject, analysisManager));
 
   // Analysis routines to make histograms
 

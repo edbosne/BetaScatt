@@ -18,12 +18,18 @@ else()
 endif()
 
 #----------------------------------------------------------------------------
+# Setup ROOT include directories and compile definitions
+# Setup include directory for this project
+#
+find_package(ROOT REQUIRED)
+include(${ROOT_USE_FILE})
+
+#----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
 # Setup include directory for this project
 #
 include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
@@ -35,8 +41,8 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(G4BetaScat G4BetaScat.cc ${sources} ${headers})
-target_link_libraries(G4BetaScat ${Geant4_LIBRARIES})
+add_executable(BetaScat G4BetaScat.cc ${sources} ${headers})
+target_link_libraries(BetaScat ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -55,5 +61,15 @@ foreach(_script ${USER_SCRIPTS})
     COPYONLY
     )
 endforeach()
+
+#----------------------------------------------------------------------------
+# Add definitions for debug and compatibility
+#
+add_definitions(-DG4ANALYSIS_USE -DGEOMETRY_DEBUG -DGDEBUG)
+
+
+
+
+
 
 

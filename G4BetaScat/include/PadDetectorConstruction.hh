@@ -4,6 +4,9 @@
 #include "globals.hh"
 #include "G4VUserDetectorConstruction.hh"
 
+#include "G4SystemOfUnits.hh"
+
+
 class G4Box;
 class G4Tubs;
 class G4Cons;
