@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
-project(G4BetaScat)
+project(BetaScatt)
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -41,8 +41,8 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(BetaScat G4BetaScat.cc ${sources} ${headers})
-target_link_libraries(BetaScat ${Geant4_LIBRARIES})
+add_executable(BetaScatt BetaScatt.cc ${sources} ${headers})
+target_link_libraries(BetaScatt ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
