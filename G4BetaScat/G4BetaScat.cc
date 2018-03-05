@@ -2,6 +2,10 @@
 #include "G4UImanager.hh"
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
+#include "G4PhysListFactory.hh"
+#include "G4VModularPhysicsList.hh"
+#include "G4ios.hh"
+
 
 #ifdef G4ANALYSIS_USE
 //#include <AIDA/IAnalysisFactory.h>
@@ -11,14 +15,13 @@
 
 #include "PadAnalysisManager.hh"
 #include "PadDetectorConstruction.hh"
-#include "PadPhysicsList.hh"
+//#include "PadPhysicsList.hh"
 #include "PadPrimaryGeneratorAction.hh"
 #include "PadRunAction.hh"
 #include "PadEventAction.hh"
 #include "PadSteppingAction.hh"
 #include "PadCentralData.hh"
 #include "globals.hh"
-#include "G4ios.hh"
 
 #include "Randomize.hh"
 
@@ -101,8 +104,16 @@ std::cout << " Created file and analysisManager " << std::endl;
 #endif
 
   // Mandatory initialization classes
+  // Detector Construction
   runManager->SetUserInitialization(new PadDetectorConstruction);
-  runManager->SetUserInitialization(new PadPhysicsList);
+
+  // Physics List
+  G4int verbose = 1;
+  G4PhysListFactory factory;
+  G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QBBC_EMZ");
+  physlist->SetVerboseLevel(verbose);
+  runManager->SetUserInitialization(physlist);
+  //runManager->SetUserInitialization(new PadPhysicsList);
 
 #ifdef GDEBUG
 std::cout << " Set user initialization " << std::endl;
