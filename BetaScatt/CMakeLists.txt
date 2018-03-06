@@ -21,7 +21,8 @@ endif()
 # Setup ROOT include directories and compile definitions
 # Setup include directory for this project
 #
-find_package(ROOT REQUIRED)
+list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
+find_package(ROOT REQUIRED COMPONENTS RIO Net)
 include(${ROOT_USE_FILE})
 
 #----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 # Add the executable, and link it to the Geant4 libraries
 #
 add_executable(BetaScatt BetaScatt.cc ${sources} ${headers})
-target_link_libraries(BetaScatt ${Geant4_LIBRARIES})
+target_link_libraries(BetaScatt ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we

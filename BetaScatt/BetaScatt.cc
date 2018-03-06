@@ -119,9 +119,10 @@ std::cout << " Created file and analysisManager " << std::endl;
 std::cout << " Set user initialization " << std::endl;
 #endif
 
+#ifdef G4ANALYSIS_USE
   // Mandatory user action class
   runManager->SetUserAction(new PadPrimaryGeneratorAction(dataObject, analysisManager));
-
+#endif
   // Analysis routines to make histograms
 
 #ifdef G4ANALYSIS_USE
@@ -185,12 +186,14 @@ std::cout << " Ending job. " << std::endl;
 
 #ifdef G4ANALYSIS_USE
   delete analysisManager;
-#endif
+
 
 //  delete analysisFactory;
   file->Write(0, TObject::kOverwrite);
   file->Close();
   delete file;
+#endif
+
 std::cout << " Ending job. " << std::endl;
 #ifdef GEOMETRY_DEBUG
   delete visManager;

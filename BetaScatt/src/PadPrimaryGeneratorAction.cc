@@ -7,6 +7,8 @@
 #include "G4ParticleGun.hh"
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "globals.hh"
 #include "Randomize.hh"
 #include <math.h>

@@ -13,6 +13,11 @@
 #include "G4ios.hh"
 #include "Randomize.hh"
 
+#include <TH1D.h>
+#include <TH2D.h>
+#include <TFile.h>
+#include <TDirectory.h>
+
 /*LA
 #include <AIDA/IAnalysisFactory.h>
 #include <AIDA/ITreeFactory.h>
