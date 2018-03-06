@@ -72,6 +72,10 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   z = 1.;
   G4Element* elH = new G4Element(name="Hydrogen", symbol="H", z, a);
 
+  a = 9.012182*g/mole;
+  z = 4.;
+  G4Element* elBe = new G4Element(name="Beryllium", symbol="Be", z, a);
+
   a = 12.01*g/mole;
   z = 6.;
   G4Element* elC = new G4Element(name="Carbon", symbol="C", z, a);
@@ -132,6 +136,10 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   z = 32.;
   G4Element* elGe = new G4Element(name="Germanium", symbol="Ge", z, a);
 
+  a = 74.9216*g/mole;
+  z = 33.;
+  G4Element* elAs = new G4Element(name="Arsenic", symbol="As", z, a);
+
   a = 87.62*g/mole;
   z = 38.;
   G4Element* elSr = new G4Element(name="Strontium", symbol="Sr", z, a);
@@ -155,14 +163,6 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   a = 196.967*g/mole;
   z = 79.;
   G4Element* elAu = new G4Element(name="Gold", symbol="Au", z, a);
-
-  a = 9.012182*g/mole;
-  z = 4.;
-  G4Element* elBe = new G4Element(name="Beryllium", symbol="Be", z, a);
-
-  a = 74.9216*g/mole;
-  z = 33.;
-  G4Element* elAs = new G4Element(name="Arsenic", symbol="As", z, a);
 
 
   density = 2.700*g/cm3;
@@ -212,12 +212,12 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   Mylar->AddElement(elC, fractionmass=0.6250);
   Mylar->AddElement(elO, fractionmass=0.3330);
 
-    G4double const mbar = 1.e-03 * bar;
+  G4double const mbar = 1.e-03 * bar;
   temperature = 293.*kelvin;
   pressure = 1.e-06*mbar;
   density = 1.29e-03*(g/cm3) * pressure/(1.*atmosphere);
   G4Material* Vacuum = new G4Material(name="Vacuum", density, ncomponents=2,
-                                   kStateGas ,temperature, pressure);
+                                   kStateGas, temperature, pressure);
   Vacuum->AddElement(elN, fractionmass=0.7);
   Vacuum->AddElement(elO, fractionmass=0.3);
 
@@ -261,7 +261,7 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   Ge->AddElement(elGe, natoms=1);
 
   density = 5.117*g/cm3;
-  G4Material* SrTiO3 = new G4Material(name="Strontiumtitanate", density, ncomponents=3);
+  G4Material* SrTiO3 = new G4Material(name="Strontium titanate", density, ncomponents=3);
   SrTiO3->AddElement(elSr, natoms=1);
   SrTiO3->AddElement(elTi, natoms=1);
   SrTiO3->AddElement(elO, natoms=3);
@@ -276,6 +276,10 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   GaAs->AddElement(elGa, natoms=1);
   GaAs->AddElement(elAs, natoms=1);
 
+  density = 3.210*g/cm3;
+  G4Material* SiC = new G4Material(name="Silicon Carbide", density, ncomponents=2);
+  SiC->AddElement(elSi, natoms=1);
+  SiC->AddElement(elC, natoms=1);
 
 
   //------------------------------------------------------------
@@ -303,6 +307,10 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     FilmMaterial = GaAs;
   } else if (FilmMatString == "InP"){
     FilmMaterial = InP;
+  } else if (FilmMatString == "SrTiO3"){
+    FilmMaterial = SrTiO3;
+  } else if (FilmMatString == "SiC"){
+    FilmMaterial = SiC;
   } else {
     logFile << "Material " << FilmMatString << " not implemented yet." 
 	    << G4endl << "Ask responsable person (Bart De Vries) " 

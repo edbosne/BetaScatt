@@ -110,8 +110,11 @@ std::cout << " Created file and analysisManager " << std::endl;
   // Physics List
   G4int verbose = 1;
   G4PhysListFactory factory;
-  G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QBBC_EMY"); //QBBC_EMZ
+  G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QBBC"); //QBBC_EMZ
+  G4double ParticleCut = dataObject->GetDefaultCutValue();
   physlist->SetVerboseLevel(verbose);
+  physlist->SetDefaultCutValue(ParticleCut);
+
   runManager->SetUserInitialization(physlist);
   //runManager->SetUserInitialization(new PadPhysicsList);
 

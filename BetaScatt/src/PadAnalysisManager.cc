@@ -49,7 +49,7 @@ PadAnalysisManager::PadAnalysisManager(PadCentralData *aCentralData, TFile* rfil
   }
 */
 
-   if (file->cd("histograms")!=kTRUE){
+   if (file->GetDirectory("histograms") == 0){
     dHistograms = file->mkdir ("histograms");
     file->cd("histograms");
     std::cout<<"creating histograms!" << std::endl;
@@ -304,7 +304,7 @@ void PadAnalysisManager::WriteOut(){
   // End write out the summary for the energy windows to file
   fstream& logFile = dataPointer->GetOutputStream();
 
-  //apply energy windows to get the countrate and fractions
+  //apply energy windows to get the count rate and fractions
   std::vector<vector<vector<G4double> > > DetectorCounts;
   DetectorCounts.resize(NumberOfWindows);
 
@@ -362,8 +362,8 @@ void PadAnalysisManager::WriteOut(){
 void PadAnalysisManager::BeginOfEvent(const G4Event*){
   G4int i,j;
 
-  for (i=0;i<3;++i) DetectorFlag[i] = 0;
-  for (i=0;i<4;++i) ScatteringFlag[i] = 0;
+  for (i=0;i<3;++i) DetectorFlag[i] = 0; // loop over detector segment
+  for (i=0;i<4;++i) ScatteringFlag[i] = 0; // loop over possible scattering events
   for (i=0;i<3;++i)
     for (j=0;j<4;++j) DepositedEnergyDetector[i][j] = 0.;
 
