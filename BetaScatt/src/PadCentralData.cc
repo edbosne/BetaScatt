@@ -148,7 +148,7 @@ void PadCentralData::ReadInputFile() {
       }
     };
 
-    if (FieldNr == -1)
+    if (FieldNr == -1) {
      // If no known data field is found:
 
       if (ReadLine[0] == '#' || OnlySpaces(ReadLine)) {
@@ -158,7 +158,7 @@ void PadCentralData::ReadInputFile() {
 	// If line contains just unrecognizable garbage
 	G4cout << "Illegal Input Field: " << ReadLine << G4endl;
       }
-    
+    }
     else {
       // If a known data field is found
       

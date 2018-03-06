@@ -50,8 +50,9 @@ target_link_libraries(BetaScatt ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 # build B1. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
+message(STATUS "Copying files ${destDir}")
 set(USER_SCRIPTS
-#  file
+  Ranlux.conf
 #  file
   )
 
@@ -63,11 +64,27 @@ foreach(_script ${USER_SCRIPTS})
     )
 endforeach()
 
+set(destDir ${PROJECT_BINARY_DIR}/Test)
+set(srcDir ${PROJECT_SOURCE_DIR}/Test)
+message(STATUS "Copying Test directory ${destDir}")
+make_directory(${destDir})
+
+file(GLOB testFiles RELATIVE ${srcDir} ${srcDir}/*)
+foreach(testFiles ${testFiles})
+    set(srcTemplatePath ${srcDir}/${testFiles})
+    if(NOT IS_DIRECTORY ${srcTemplatePath})
+        configure_file(
+                ${srcTemplatePath}
+                ${destDir}/${testFiles}
+                COPYONLY)
+    endif(NOT IS_DIRECTORY ${srcTemplatePath})
+endforeach(testFiles)
+
 #----------------------------------------------------------------------------
 # Add definitions for debug and compatibility
 #
-add_definitions(-DG4ANALYSIS_USE -DGEOMETRY_DEBUG -DGDEBUG)
-
+#add_definitions(-DG4ANALYSIS_USE -DGEOMETRY_DEBUG -DGDEBUG)
+add_definitions(-DG4ANALYSIS_USE -DGDEBUG)
 
 
 
