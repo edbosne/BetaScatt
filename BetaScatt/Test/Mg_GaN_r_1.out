@@ -1,0 +1,75 @@
+Maximum e- energy set from file (keV) = 1800
+
+Rotation matrix for sample holder (defined by angles theta and phi):
+1 0 0
+0 1 0
+0 0 1
+
+
+Event Number: 50000
+Count in energy window 0 = 0 keV to 1801 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det          83        50        16        20   0.397590  1.660000
+3x3 pix            0         0         0         0   0.000000  0.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+Count in energy window 1 = 1000 keV to 1800 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det           0         0         0         0   0.000000  0.000000
+3x3 pix            0         0         0         0   0.000000  0.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+Count in energy window 2 = 2 keV to 1000 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det          83        50        16        20   0.397590  1.660000
+3x3 pix            0         0         0         0   0.000000  0.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+
+Event Number: 100000
+Count in energy window 0 = 0 keV to 1801 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det         147        86        32        42   0.414966  1.709302
+3x3 pix            4         1         2         3   0.750000  4.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+Count in energy window 1 = 1000 keV to 1800 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det           0         0         0         0   0.000000  0.000000
+3x3 pix            0         0         0         0   0.000000  0.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+Count in energy window 2 = 2 keV to 1000 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det         146        85        32        42   0.417808  1.717647
+3x3 pix            4         1         2         3   0.750000  4.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+
+Event Number: 150000
+Count in energy window 0 = 0 keV to 1801 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det         204       121        43        55   0.406863  1.685950
+3x3 pix            4         1         2         3   0.750000  4.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+Count in energy window 1 = 1000 keV to 1800 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det           0         0         0         0   0.000000  0.000000
+3x3 pix            0         0         0         0   0.000000  0.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+Count in energy window 2 = 2 keV to 1000 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det         202       120        42        55   0.405941  1.683333
+3x3 pix            4         1         2         3   0.750000  4.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+
+At end of Run
+Count in energy window 0 = 0 keV to 1801 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det         257       153        51        71   0.404669  1.679739
+3x3 pix            5         1         2         4   0.800000  5.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+Count in energy window 1 = 1000 keV to 1800 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det           0         0         0         0   0.000000  0.000000
+3x3 pix            0         0         0         0   0.000000  0.000000
+1x1 pix            0         0         0         0   0.000000  0.000000
+Count in energy window 2 = 2 keV to 1000 keV
+DetSegm      Total e-    Dir e-   Tube e-   Back e-  BackFrac  CorrFact
+Full det         254       152        49        70   0.401575  1.671053
+3x3 pix            5         1         2         4   0.800000  5.000000
+1x1 pix            0         0         0         0   0.000000  0.000000

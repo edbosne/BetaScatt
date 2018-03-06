@@ -1,0 +1,46 @@
+# Comments should always begin with '#' as the first
+# character of the line
+
+FilePath             : Test
+OutputFileName       : Mg_AlN_r.out
+SeedFileName         : Ranlux.conf
+HistogramFileName    : Mg_AlN_r.root
+BetaSpectrumFileName : 27Mg.data
+NumberOfEvents       : 5000000
+EventWriteOut        : 100000
+MaximumHEnergy       : 1800
+PadSetup             : 6
+FilmThickness        : 1.6e-4 
+FilmMaterial         : AlN
+SampleThickness      : 0.04
+SubstrateMaterial    : Sapphire
+
+# All distances in cm's
+MaxRadius            : 0.05
+MeanDepth            : 650.e-8
+SigmaDepth           : 251.e-8
+ThetaRotation        : 0
+PhiRotation          : 0
+
+# ElecType 1 = beta, ElecType 2 = CE
+# 0 = beta and CE, in that case the conversion electron
+# weights should be normalized with respect to the beta
+# decay
+ElecType             : 1
+NumberOfConvElecLines: 1
+ConvElecEnergies     : 100 200
+ConvElecWeights      : 0.5 0.25
+EnergyWindow         : 20 1800
+EnergyWindow         : 350 1100
+
+# Step and Cut Values in Angstrom
+DefaultCutValue      : 10000
+MaxFilmStep          : 1500
+WriteSeed            : 0
+VerboseRun           : 1
+VerboseEvent         : 0
+VerboseTrack         : 0
+VerbosePhysics       : 0
+#Beware, these override the default random position and momentum
+#StartingPosition     : 0. 0. 0.
+#StartingMomentum     : 0 0 1

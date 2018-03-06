@@ -1,0 +1,46 @@
+# Comments should always begin with '#' as the first
+# character of the line
+
+FilePath             : Test
+OutputFileName       : Mg_GaN_r_5.out
+SeedFileName         : Ranlux.conf
+HistogramFileName    : Mg_GaN_r_5.root
+BetaSpectrumFileName : 27Mg.data
+NumberOfEvents       : 200000
+EventWriteOut        : 50000
+MaximumHEnergy       : 1800
+PadSetup             : 5
+FilmThickness        : 1.6e-4 
+FilmMaterial         : GaN
+SampleThickness      : 0.04
+SubstrateMaterial    : Sapphire
+
+# All distances in cm's
+MaxRadius            : 0.05
+MeanDepth            : 499.e-8
+SigmaDepth           : 246.e-8
+ThetaRotation        : 0
+PhiRotation          : 0
+
+# ElecType 1 = beta, ElecType 2 = CE
+# 0 = beta and CE, in that case the conversion electron
+# weights should be normalized with respect to the beta
+# decay
+ElecType             : 1
+NumberOfConvElecLines: 1
+ConvElecEnergies     : 100 200
+ConvElecWeights      : 0.5 0.25
+EnergyWindow         : 1000 1800
+EnergyWindow         : 2 1000
+
+# Step and Cut Values in Angstrom
+DefaultCutValue      : 10000
+MaxFilmStep          : 1500
+WriteSeed            : 0
+VerboseRun           : 0
+VerboseEvent         : 0
+VerboseTrack         : 0
+VerbosePhysics       : 0
+#Beware, these override the default random position and momentum
+#StartingPosition     : 0. 0. 0.
+#StartingMomentum     : 0 0 1
