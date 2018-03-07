@@ -246,6 +246,24 @@ the end of this if is after the histoFactory delete*/
       }
     }
 
+    // iniciate pixel histogram for timepix detectors
+    if (dataPointer->GetPadSetup() == 256 ||
+		dataPointer->GetPadSetup() == 512) {
+
+    	// get number of pixels
+    	G4int Npixels;
+    	if (dataPointer->GetPadSetup() == 256)
+    		Npixels = 256;
+    	if (dataPointer->GetPadSetup() == 512)
+    		Npixels = 512 + 4;
+
+		// histograms for direct, scattered, backscattered and scattered in tube
+		PixelDetectorPatt[0] = new TH2D ("Direct betas", "Direct betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
+		PixelDetectorPatt[1] = new TH2D ("Scattered betas", "Scattered betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
+		PixelDetectorPatt[2] = new TH2D ("Backscattered betas", "Backscattered betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
+		PixelDetectorPatt[3] = new TH2D ("Scattered in tube betas", "Scattered in tube betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
+    }
+
 
     // Register the histograms for the thin film
 

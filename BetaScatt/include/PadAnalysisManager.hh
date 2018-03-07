@@ -93,6 +93,7 @@ private:
   TH1D * HDetectorSpectrum[3][4];
   TH2D * HDetectorXY[3][4];
   TH1D * HDetectorX[3][4];
+  TH2D * PixelDetectorPatt[4]
 //  G4double * HDetectorDepth[3][4];
 //  G4double * HDetectorSpectrum[3][4];
 //  G4double * HDetectorX[3][4];
