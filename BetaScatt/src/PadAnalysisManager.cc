@@ -187,6 +187,12 @@ PadAnalysisManager::PadAnalysisManager(PadCentralData *aCentralData, TFile* rfil
   case 14:
     DetectorLowerBound = 31.575;  DetectorUpperBound = 31.625;
     break;
+  case 256:
+    DetectorLowerBound = 31.6 - 0.5 * 0.03;  DetectorUpperBound = 31.6 + 0.5 * 0.03;
+    break;
+  case 512:
+	DetectorLowerBound = 31.6 - 0.5 * 0.03;  DetectorUpperBound = 31.6 + 0.5 * 0.03;
+    break;
   };
   
   G4double DetectorXYSize[3] = {1.5, 0.2, 0.065};
@@ -222,7 +228,7 @@ the end of this if is after the histoFactory delete*/
       for (G4int j=0; j<4; j++) {
 
 	HistogramName = DetectorFragment[i] + "Depth" + ElectronKind[j];
-        HDetectorDepth[i][j] = new TH1D (HistogramName, HistogramName, 100, DetectorLowerBound, DetectorUpperBound);
+    HDetectorDepth[i][j] = new TH1D (HistogramName, HistogramName, 100, DetectorLowerBound, DetectorUpperBound);
 //	 histoFactory->createHistogram1D(HistogramName, 100, DetectorLowerBound, DetectorUpperBound);
 	
 	HistogramName = DetectorFragment[i] + "Spectrum" + ElectronKind[j];
