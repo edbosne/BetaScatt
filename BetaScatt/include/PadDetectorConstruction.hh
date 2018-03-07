@@ -4,14 +4,12 @@
 #include "globals.hh"
 #include "G4VUserDetectorConstruction.hh"
 
-#include "G4SystemOfUnits.hh"
-
-
 class G4Box;
 class G4Tubs;
 class G4Cons;
 class G4LogicalVolume;
 class G4VPhysicalVolume;
+class G4GlobalMagFieldMessenger;
 class PadCentralData;
 
 class PadDetectorConstruction : public G4VUserDetectorConstruction
@@ -24,6 +22,7 @@ public:
 public:
   
   G4VPhysicalVolume* Construct();
+  virtual void ConstructSDandField();
   
 private:
   
@@ -164,6 +163,7 @@ private:
   G4LogicalVolume*   logicShieldplateD;
   G4VPhysicalVolume* physiShieldplateD;
 
+  static G4ThreadLocal G4GlobalMagFieldMessenger*  fMagFieldMessenger;
 };
 
 #endif

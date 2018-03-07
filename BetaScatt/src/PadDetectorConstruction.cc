@@ -14,6 +14,15 @@
 #include "G4ios.hh"
 #include "G4VisAttributes.hh"
 #include "G4UserLimits.hh"
+#include "G4SystemOfUnits.hh"
+
+#include "G4SDManager.hh"
+#include "G4MultiFunctionalDetector.hh"
+#include "G4VPrimitiveScorer.hh"
+#include "G4PVReplica.hh"
+#include "G4GlobalMagFieldMessenger.hh"
+#include "G4AutoDelete.hh"
+
 #include <fstream>
 
 using namespace std;
@@ -1519,10 +1528,13 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
 				       logicDetector3, physiDetector2, false, 0);
 
   //----------------------------------------------------------
-  //                  PAD6 Setup only
+  //              PAD6 Timepix-quad and Timepix Setup
   //----------------------------------------------------------
     
-  }   else if (dataPointer->GetPadSetup() == 6) {  
+  }   else if (dataPointer->GetPadSetup() == 6   ||
+		  	   dataPointer->GetPadSetup() == 512 ||
+			   dataPointer->GetPadSetup() == 256) {
+	// Setups in the EC-SLI chamber are equivalent for all  3 detectors
 
     //---------------------
     // Vacuum tube 1 (pad6)
@@ -1747,56 +1759,117 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     // Si detector (22 x 22) (pad6)
     //-----------------------------
     
-    HalfX = 2.86*0.5*cm;
-    HalfY = 2.86*0.5*cm;
-    HalfZ = 0.05*0.5*cm;
-    
-    Position = G4ThreeVector(0.,0.,31.6*cm);
-    
-    solidDetector1 = new G4Box("detector1",HalfX,HalfY,HalfZ);
-    logicDetector1 = new G4LogicalVolume(solidDetector1, Si,
-					 "Detector1", 0, 0, 0);
-    logicDetector1->SetVisAttributes(greenVisAtt);
-    physiDetector1 = new G4PVPlacement(0, Position, "Detector1",
-				       logicDetector1, physiWorld, false, 0);
-    
-    
-    
-    //---------------------------
-    // Si detector (3 x 3) (pad6)
-    //---------------------------
-    
-    HalfX = 0.39*0.5*cm;
-    HalfY = 0.39*0.5*cm;
-    HalfZ = 0.05*0.5*cm;
-    
-    Position = G4ThreeVector(0.,0.,0.*cm);
-    
-    solidDetector2 = new G4Box("detector2",HalfX,HalfY,HalfZ);
-    logicDetector2 = new G4LogicalVolume(solidDetector2, Si,
-					 "Detector2", 0, 0, 0);
-    logicDetector2->SetVisAttributes(greenVisAtt);
-    physiDetector2 = new G4PVPlacement(0, Position, "Detector2",
-				       logicDetector2, physiDetector1, false, 0);
-    
-    
-    
-    //---------------------------
-    // Si detector (1 x 1) (pad6)
-    //---------------------------
-    
-    HalfX = 0.13*0.5*cm;
-    HalfY = 0.13*0.5*cm;
-    HalfZ = 0.05*0.5*cm;
-    
-    Position = G4ThreeVector(0.,0.,0.*cm);
-    
-    solidDetector3 = new G4Box("detector3",HalfX,HalfY,HalfZ);
-    logicDetector3 = new G4LogicalVolume(solidDetector3, Si,
-					 "Detector3", 0, 0, 0);
-    logicDetector3->SetVisAttributes(greenVisAtt);
-    physiDetector3 = new G4PVPlacement(0, Position, "Detector3",
-				       logicDetector3, physiDetector2, false, 0);
+    if (dataPointer->GetPadSetup() == 6) {
+
+		HalfX = 2.86*0.5*cm;
+		HalfY = 2.86*0.5*cm;
+		HalfZ = 0.05*0.5*cm;
+
+		Position = G4ThreeVector(0.,0.,31.6*cm);
+
+		solidDetector1 = new G4Box("detector1",HalfX,HalfY,HalfZ);
+		logicDetector1 = new G4LogicalVolume(solidDetector1, Si,
+						 "Detector1", 0, 0, 0);
+		logicDetector1->SetVisAttributes(greenVisAtt);
+		physiDetector1 = new G4PVPlacement(0, Position, "Detector1",
+						   logicDetector1, physiWorld, false, 0);
+
+
+
+		//---------------------------
+		// Si detector (3 x 3) (pad6)
+		//---------------------------
+
+		HalfX = 0.39*0.5*cm;
+		HalfY = 0.39*0.5*cm;
+		HalfZ = 0.05*0.5*cm;
+
+		Position = G4ThreeVector(0.,0.,0.*cm);
+
+		solidDetector2 = new G4Box("detector2",HalfX,HalfY,HalfZ);
+		logicDetector2 = new G4LogicalVolume(solidDetector2, Si,
+						 "Detector2", 0, 0, 0);
+		logicDetector2->SetVisAttributes(greenVisAtt);
+		physiDetector2 = new G4PVPlacement(0, Position, "Detector2",
+						   logicDetector2, physiDetector1, false, 0);
+
+
+
+		//---------------------------
+		// Si detector (1 x 1) (pad6)
+		//---------------------------
+
+		HalfX = 0.13*0.5*cm;
+		HalfY = 0.13*0.5*cm;
+		HalfZ = 0.05*0.5*cm;
+
+		Position = G4ThreeVector(0.,0.,0.*cm);
+
+		solidDetector3 = new G4Box("detector3",HalfX,HalfY,HalfZ);
+		logicDetector3 = new G4LogicalVolume(solidDetector3, Si,
+						 "Detector3", 0, 0, 0);
+		logicDetector3->SetVisAttributes(greenVisAtt);
+		physiDetector3 = new G4PVPlacement(0, Position, "Detector3",
+						   logicDetector3, physiDetector2, false, 0);
+
+	//----------------------------------------------------------
+	//                  Timepix quad and 256 Setup
+	//----------------------------------------------------------
+    } else if (dataPointer->GetPadSetup() == 512 ||
+    		   dataPointer->GetPadSetup() == 256) {
+
+    	G4int fNofPixels = 0;
+    	if (dataPointer->GetPadSetup() == 512){
+    		fNofPixels = 512 + 4; //4 to take into account the larger central pixels
+    	} else if (dataPointer->GetPadSetup() == 256)
+    		fNofPixels = 256;
+
+    	// Full detector
+    	G4double detector_sizeZ = 300*um;
+		G4double pixel_sizeXY = 55*um;
+		G4double detector_sizeXY = fNofPixels * pixel_sizeXY;
+
+		Position = G4ThreeVector(0.,0.,31.6*cm);
+
+		solidDetector1 = new G4Box("Detector1",
+				0.5*detector_sizeXY, 0.5*detector_sizeXY, 0.5*detector_sizeZ);
+		logicDetector1 = new G4LogicalVolume(solidDetector1, Si, "Detector1");
+		logicDetector1->SetVisAttributes(greenVisAtt);
+
+		// Detector line
+
+		solidDetector2 = new G4Box("Detector2",
+				0.5*detector_sizeXY, 0.5*pixel_sizeXY, 0.5*detector_sizeZ);
+		logicDetector2 = new G4LogicalVolume(solidDetector2, Si, "Detector2");
+
+		// Detector pixel
+
+		solidDetector3 = new G4Box("Detector3",
+				0.5*pixel_sizeXY, 0.5*pixel_sizeXY, 0.5*detector_sizeZ);
+		logicDetector3 = new G4LogicalVolume(solidDetector3, Si, "Detector3");
+
+		//Pixel Replicas to form line
+
+		new G4PVReplica("DetectorPixelReplica",
+				logicDetector3, logicDetector2,
+				kXAxis, fNofPixels, pixel_sizeXY);
+
+		//Line replicas to form detector
+
+		new G4PVReplica("DetectorLineReplica",
+				logicDetector2, logicDetector1,
+				kYAxis, fNofPixels, pixel_sizeXY);
+
+		physiDetector1 = new G4PVPlacement(0, Position, "Detector1",
+										   logicDetector1, physiWorld, false, 0);
+
+		// User Limits
+		// Sets a max step length in the tracker region, with G4StepLimiter
+
+		G4double maxStep = 1*um;
+		logicDetector3->SetUserLimits(new G4UserLimits(maxStep));
+
+    } // end of tpx but not (tpx + pad)
 
 //BY LA
   //----------------------------------------------------------
@@ -2296,4 +2369,41 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   };
 
   return physiWorld;
+}
+
+void PadDetectorConstruction::ConstructSDandField()
+{
+	if (dataPointer->GetPadSetup() == 512 ||
+		dataPointer->GetPadSetup() == 256) {
+		//
+		// Scorers
+		//
+
+		// declare Absorber as a MultiFunctionalDetector scorer
+		//
+		G4MultiFunctionalDetector* PixDetector
+		= new G4MultiFunctionalDetector("Pixel");
+		G4SDManager::GetSDMpointer()->AddNewDetector(PixDetector);
+
+		G4VPrimitiveScorer* primitive;
+		primitive = new PadPSEnergyDeposit("Edep");
+
+		PixDetector->RegisterPrimitive(primitive);
+
+		G4SDManager* SDman = G4SDManager::GetSDMpointer();
+		SDman->AddNewDetector( PixDetector );
+
+		logicDetector3->SetSensitiveDetector(PixDetector);
+
+		//
+		// Create global magnetic field messenger.
+		// Uniform magnetic field is then created automatically if
+		// the field value is not zero.
+		//
+		G4ThreeVector fieldValue = G4ThreeVector();
+		fMagFieldMessenger = new G4GlobalMagFieldMessenger(fieldValue);
+		fMagFieldMessenger->SetVerboseLevel(1);
+		// register the field messenger for deleting
+		G4AutoDelete::Register(fMagFieldMessenger);
+	}
 }
