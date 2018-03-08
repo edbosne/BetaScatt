@@ -1833,20 +1833,20 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
 
 		Position = G4ThreeVector(0.,0.,31.6*cm);
 
-		solidDetector1 = new G4Box("Detector1",
+		solidDetector1 = new G4Box("detector1",
 				0.5*detector_sizeXY, 0.5*detector_sizeXY, 0.5*detector_sizeZ);
 		logicDetector1 = new G4LogicalVolume(solidDetector1, Si, "Detector1");
 		logicDetector1->SetVisAttributes(greenVisAtt);
 
 		// Detector line
 
-		solidDetector2 = new G4Box("Detector2",
+		solidDetector2 = new G4Box("detector2",
 				0.5*detector_sizeXY, 0.5*pixel_sizeXY, 0.5*detector_sizeZ);
 		logicDetector2 = new G4LogicalVolume(solidDetector2, Si, "Detector2");
 
 		// Detector pixel
 
-		solidDetector3 = new G4Box("Detector3",
+		solidDetector3 = new G4Box("detector3",
 				0.5*pixel_sizeXY, 0.5*pixel_sizeXY, 0.5*detector_sizeZ);
 		logicDetector3 = new G4LogicalVolume(solidDetector3, Si, "Detector3");
 

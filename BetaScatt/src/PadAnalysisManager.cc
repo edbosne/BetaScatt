@@ -431,8 +431,9 @@ void PadAnalysisManager::EndOfEvent(const G4Event* aEvent){
 
   // Fill pixel histogram for timepix detectors
   // histograms order is: direct, scattered, scattered in tube and backscattered
-      if (dataPointer->GetPadSetup() == 256 ||
-			dataPointer->GetPadSetup() == 512) {
+      if (  DetectorFlag[0] == 1 && (
+    		dataPointer->GetPadSetup() == 256 ||
+			dataPointer->GetPadSetup() == 512 )) {
 			// types of scattering
 			// [0] = " (all e-)";
 			// [1] = " (non-scattered e-)";
@@ -450,17 +451,19 @@ void PadAnalysisManager::EndOfEvent(const G4Event* aEvent){
 			// Get X Y centroid
 			std::pair <G4double,G4double> xy = GetEngCentroid(hitsCollection);
 
-			if (ScatteringFlag[0] == 0){
-				PixelDetectorPatt[0]->Fill(xy.first, xy.second);
-			} else {
-				if (ScatteringFlag[0] == 1) {
-					PixelDetectorPatt[1]->Fill(xy.first, xy.second);
-				}
-				if (ScatteringFlag[2] == 1) {
-					PixelDetectorPatt[2]->Fill(xy.first, xy.second);
-				}
-				if (ScatteringFlag[3] == 1) {
-					PixelDetectorPatt[3]->Fill(xy.first, xy.second);
+			if (xy.first >= 0) {
+				if (ScatteringFlag[0] == 0){
+					PixelDetectorPatt[0]->Fill(xy.first, xy.second);
+				} else {
+					if (ScatteringFlag[0] == 1) {
+						PixelDetectorPatt[1]->Fill(xy.first, xy.second);
+					}
+					if (ScatteringFlag[2] == 1) {
+						PixelDetectorPatt[2]->Fill(xy.first, xy.second);
+					}
+					if (ScatteringFlag[3] == 1) {
+						PixelDetectorPatt[3]->Fill(xy.first, xy.second);
+					}
 				}
 			}
       }
@@ -498,6 +501,9 @@ void PadAnalysisManager::Step(const G4Step* aStep){
   // delta position in coordinates of box
   G4double deltaZ = deltaPosition.z() * cos(theta) - deltaPosition.x() * sin(theta);
 
+  if (NameVolume == "DetectorPixelReplica" ) {
+	  NameVolume = "Detector1";
+  }
 
   if ((NameVolume == "Film" ) && (DetectorFlag[0] == 0)) {
     HFilmDepth->Fill(boxZ,EnergyStepWeight);
@@ -806,7 +812,7 @@ std::pair<G4double,G4double>  PadAnalysisManager::
 	G4double THL = 0;
 
 	G4int NPixels = hitsMap->entries();
-	if(NPixels <= 0) return std::make_pair(-9999,-9999);
+	if(NPixels <= 0) return std::make_pair(-9990,-9990);
 
 	G4double X=0, Y=0;
 	G4double TotalEnergy = 0;
@@ -816,12 +822,12 @@ std::pair<G4double,G4double>  PadAnalysisManager::
 	std::map<G4int, G4double*>::iterator it;
 	for ( it = hitsMap->GetMap()->begin(); it != hitsMap->GetMap()->end(); it++)
     {
-		if ( *(it->second) < THL) {
+		Energy = *(it->second) / keV;
+		if ( Energy < THL) {
 			NPixels -= 1;
-			if(NPixels <= 0) return std::make_pair(-9999,-9999);
+			if(NPixels <= 0) return std::make_pair(-9991,-9991);
 			continue;
 		}
-		Energy = *(it->second) / keV;
 		TotalEnergy += Energy;
 		xy = it->first;
 		x = (xy % 1000);
