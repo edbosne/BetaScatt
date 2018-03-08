@@ -1,5 +1,5 @@
 #ifndef PADPSENERGYDEPOSIT_HH_
-#define PADPSENERGYDEPOSIT_HH_
+#define PADPSENERGYDEPOSIT_HH_ 1
 
 #include "G4PSEnergyDeposit.hh"
 

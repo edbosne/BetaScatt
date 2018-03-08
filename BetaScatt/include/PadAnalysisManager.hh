@@ -13,6 +13,7 @@
 #include <TDirectory.h>
 
 #include "G4SystemOfUnits.hh"
+#include "G4THitsMap.hh"
 
 
 class G4Run;
@@ -54,6 +55,7 @@ private:
 //  G4double HistoIntegrate(G4double *, G4double, G4double);
 //  G4double HistoIntegrate(AIDA::IHistogram1D*, G4double, G4double);
   G4double HistoIntegrate(TH1D*, G4double, G4double);
+  std::pair<G4double,G4double>  GetEngCentroid(G4THitsMap<G4double>*) const;
 
 private:
   PadCentralData *dataPointer;
@@ -93,7 +95,7 @@ private:
   TH1D * HDetectorSpectrum[3][4];
   TH2D * HDetectorXY[3][4];
   TH1D * HDetectorX[3][4];
-  TH2D * PixelDetectorPatt[4]
+  TH2D * PixelDetectorPatt[4];
 //  G4double * HDetectorDepth[3][4];
 //  G4double * HDetectorSpectrum[3][4];
 //  G4double * HDetectorX[3][4];

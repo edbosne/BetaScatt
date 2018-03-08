@@ -11,6 +11,7 @@
 #include "G4Step.hh"
 #include "globals.hh"
 #include "G4ios.hh"
+#include "G4SDManager.hh"
 #include "Randomize.hh"
 
 #include <TH1D.h>
@@ -257,11 +258,11 @@ the end of this if is after the histoFactory delete*/
     	if (dataPointer->GetPadSetup() == 512)
     		Npixels = 512 + 4;
 
-		// histograms for direct, scattered, backscattered and scattered in tube
+		// histograms for direct, scattered, scattered in tube and backscattered
 		PixelDetectorPatt[0] = new TH2D ("Direct betas", "Direct betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
 		PixelDetectorPatt[1] = new TH2D ("Scattered betas", "Scattered betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
-		PixelDetectorPatt[2] = new TH2D ("Backscattered betas", "Backscattered betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
-		PixelDetectorPatt[3] = new TH2D ("Scattered in tube betas", "Scattered in tube betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
+		PixelDetectorPatt[2] = new TH2D ("Scattered in tube betas", "Scattered in tube betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
+		PixelDetectorPatt[3] = new TH2D ("Backscattered betas", "Backscattered betas", Npixels, 0, Npixels, Npixels, 0, Npixels);
     }
 
 
@@ -427,6 +428,42 @@ void PadAnalysisManager::EndOfEvent(const G4Event* aEvent){
       WriteOut();
     }
   }
+
+  // Fill pixel histogram for timepix detectors
+  // histograms order is: direct, scattered, scattered in tube and backscattered
+      if (dataPointer->GetPadSetup() == 256 ||
+			dataPointer->GetPadSetup() == 512) {
+			// types of scattering
+			// [0] = " (all e-)";
+			// [1] = " (non-scattered e-)";
+			// [2] = " (e- scattered in tubes)";
+			// [3] = " (backscattered e-)";
+
+			// Get hist collections IDs
+			G4int hcID = G4SDManager::GetSDMpointer()->GetCollectionID("Pixel/Edep");
+
+			// Get Hit map
+			G4THitsMap<G4double>* hitsCollection
+				= static_cast<G4THitsMap<G4double>*>(
+					aEvent->GetHCofThisEvent()->GetHC(hcID));
+
+			// Get X Y centroid
+			std::pair <G4double,G4double> xy = GetEngCentroid(hitsCollection);
+
+			if (ScatteringFlag[0] == 0){
+				PixelDetectorPatt[0]->Fill(xy.first, xy.second);
+			} else {
+				if (ScatteringFlag[0] == 1) {
+					PixelDetectorPatt[1]->Fill(xy.first, xy.second);
+				}
+				if (ScatteringFlag[2] == 1) {
+					PixelDetectorPatt[2]->Fill(xy.first, xy.second);
+				}
+				if (ScatteringFlag[3] == 1) {
+					PixelDetectorPatt[3]->Fill(xy.first, xy.second);
+				}
+			}
+      }
 }
 
 void PadAnalysisManager::Step(const G4Step* aStep){
@@ -761,6 +798,41 @@ G4int PadAnalysisManager::BinarySearch(TH1D* aHistogram, G4double aValue)
     else nbelow = middle;
   }
    return nbelow-1;
+}
+
+std::pair<G4double,G4double>  PadAnalysisManager::
+	GetEngCentroid(G4THitsMap<G4double>* hitsMap) const
+{
+	G4double THL = 0;
+
+	G4int NPixels = hitsMap->entries();
+	if(NPixels <= 0) return std::make_pair(-9999,-9999);
+
+	G4double X=0, Y=0;
+	G4double TotalEnergy = 0;
+	G4double Energy;
+	G4int x, y, xy;
+
+	std::map<G4int, G4double*>::iterator it;
+	for ( it = hitsMap->GetMap()->begin(); it != hitsMap->GetMap()->end(); it++)
+    {
+		if ( *(it->second) < THL) {
+			NPixels -= 1;
+			if(NPixels <= 0) return std::make_pair(-9999,-9999);
+			continue;
+		}
+		Energy = *(it->second) / keV;
+		TotalEnergy += Energy;
+		xy = it->first;
+		x = (xy % 1000);
+		y = ( (xy - x) / 1000);
+		X += x * Energy;
+		Y += y * Energy;
+	}
+	X = X / TotalEnergy;
+	Y = Y / TotalEnergy;
+
+	return std::make_pair(X,Y);
 }
 
 

@@ -1,4 +1,7 @@
 #include "PadDetectorConstruction.hh"
+#include "PadPSEnergyDeposit.hh"
+#include "PadCentralData.hh"
+
 #include "G4Material.hh"
 #include "G4Box.hh"
 #include "G4Tubs.hh"
@@ -10,7 +13,6 @@
 #include "G4ThreeVector.hh"
 #include "G4PVPlacement.hh"
 #include "globals.hh"
-#include "PadCentralData.hh"
 #include "G4ios.hh"
 #include "G4VisAttributes.hh"
 #include "G4UserLimits.hh"
@@ -1866,8 +1868,8 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
 		// User Limits
 		// Sets a max step length in the tracker region, with G4StepLimiter
 
-		G4double maxStep = 1*um;
-		logicDetector3->SetUserLimits(new G4UserLimits(maxStep));
+		G4double maxStep_limit = 1*um;
+		logicDetector3->SetUserLimits(new G4UserLimits(maxStep_limit));
 
     } // end of tpx but not (tpx + pad)
 
@@ -2370,6 +2372,9 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
 
   return physiWorld;
 }
+
+G4ThreadLocal
+G4GlobalMagFieldMessenger* PadDetectorConstruction::fMagFieldMessenger = 0;
 
 void PadDetectorConstruction::ConstructSDandField()
 {

@@ -29,6 +29,7 @@ private:
   void DefineMaterials();
   G4VPhysicalVolume* ConstructVolumes();
   PadCentralData* dataPointer;
+  static G4ThreadLocal G4GlobalMagFieldMessenger* fMagFieldMessenger;
   
 private:
   G4Box*             solidWorld;
@@ -63,7 +64,7 @@ private:
   G4LogicalVolume*   logicShield;
   G4VPhysicalVolume* physiShield;
 
-  G4Box*            solidShield2;
+  G4Box*             solidShield2;
   G4LogicalVolume*   logicShield2;
   G4VPhysicalVolume* physiShield2;
 
@@ -163,7 +164,6 @@ private:
   G4LogicalVolume*   logicShieldplateD;
   G4VPhysicalVolume* physiShieldplateD;
 
-  static G4ThreadLocal G4GlobalMagFieldMessenger*  fMagFieldMessenger;
 };
 
 #endif
