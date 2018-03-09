@@ -26,6 +26,7 @@
 #include "G4AutoDelete.hh"
 
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 
@@ -1662,6 +1663,16 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
 				   logicTube5, physiWorld, false, 0);
 
     //---------------------
+	// Colimator is different for pad and timepix
+	//---------------------
+    G4double rotation_angle, distance, xpos, ypos;
+    if (dataPointer->GetPadSetup() == 6) {
+    	rotation_angle = 343.0 * deg;
+    } else if (dataPointer->GetPadSetup() == 512 ||
+    		   dataPointer->GetPadSetup() == 256) {
+    	rotation_angle = 30.0 * deg;
+    }
+    //---------------------
     // Vacuum tube 6: nozzle tip (pad6)
     //---------------------
     
@@ -1670,11 +1681,15 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     HalfZ = 1.28*0.5*cm;
     StartingAngle = 0.*deg;
     SegmentAngle = 360.*deg;
+    distance = 5.045 * cm;
+    xpos = - std::sin(rotation_angle / radian) * distance;
+    ypos = std::cos(rotation_angle / radian) * distance;
 
     G4RotationMatrix* rottube6 = new G4RotationMatrix();
-    rottube6->rotateY(343*deg);
+    rottube6->rotateY(rotation_angle);
     
-    Position = G4ThreeVector(1.474*cm,0.,4.820*cm); //fully screwed
+    Position = G4ThreeVector(xpos,0.,ypos); //fully screwed
+//    Position = G4ThreeVector(1.474*cm,0.,4.820*cm); //fully screwed
 //    Position = G4ThreeVector(1.403*cm,0.,4.8*cm); //5mm unscrewed
     
     solidTube6 = new G4Tubs("tube6",InnerRadius,OuterRadius,HalfZ,
@@ -1696,11 +1711,14 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     HalfZ = 1.59*0.5*cm;
     StartingAngle = 0.*deg;
     SegmentAngle = 360.*deg;
+    distance = 6.48 * cm;
+    xpos = - std::sin(rotation_angle / radian) * distance;
+    ypos = std::cos(rotation_angle / radian) * distance;
 
     G4RotationMatrix* rotcone2 = new G4RotationMatrix();
-    rotcone2->rotateY(343*deg);
+    rotcone2->rotateY(rotation_angle);
     
-    Position = G4ThreeVector(1.895*cm,0.,6.197*cm);
+    Position = G4ThreeVector(xpos,0.,ypos);
     
     solidCone2 = new G4Cons("cone2",InnerRadius1,OuterRadius1,
 			    InnerRadius2,OuterRadius2,HalfZ,
@@ -1720,11 +1738,14 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     HalfZ = 1.29*0.5*cm;
     StartingAngle = 0.*deg;
     SegmentAngle = 360.*deg;
+    distance = 7.92 * cm;
+    xpos = - std::sin(rotation_angle / radian) * distance;
+    ypos = std::cos(rotation_angle / radian) * distance;
 
     G4RotationMatrix* rottube7 = new G4RotationMatrix();
-    rottube7->rotateY(343*deg);
+    rottube7->rotateY(rotation_angle);
     
-    Position = G4ThreeVector(2.316*cm,0.,7.574*cm);
+    Position = G4ThreeVector(xpos,0.,ypos);
     
     solidTube7 = new G4Tubs("tube7",InnerRadius,OuterRadius,HalfZ,
 			    StartingAngle,SegmentAngle);
@@ -1743,11 +1764,16 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     HalfZ = 8.7*0.5*cm;
     StartingAngle = 0.*deg;
     SegmentAngle = 360.*deg;
+    distance = 12.915 * cm;
+    xpos = - std::sin(rotation_angle / radian) * distance;
+    ypos = std::cos(rotation_angle / radian) * distance;
+
+    Position = G4ThreeVector(xpos,0.,ypos);
 
     G4RotationMatrix* rottube8 = new G4RotationMatrix();
-    rottube8->rotateY(343*deg);
+    rottube8->rotateY(rotation_angle);
     
-    Position = G4ThreeVector(3.775*cm,0.,12.346*cm);
+    Position = G4ThreeVector(xpos,0.,ypos);
     
     solidTube8 = new G4Tubs("tube8",InnerRadius,OuterRadius,HalfZ,
 			    StartingAngle,SegmentAngle);

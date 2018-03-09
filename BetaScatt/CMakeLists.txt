@@ -80,6 +80,23 @@ foreach(testFiles ${testFiles})
     endif(NOT IS_DIRECTORY ${srcTemplatePath})
 endforeach(testFiles)
 
+set(destDir ${PROJECT_BINARY_DIR}/isotope_spectrums)
+set(srcDir ${PROJECT_SOURCE_DIR}/isotope_spectrums)
+message(STATUS "Copying Test directory ${destDir}")
+make_directory(${destDir})
+
+file(GLOB testFiles RELATIVE ${srcDir} ${srcDir}/*)
+foreach(testFiles ${testFiles})
+    set(srcTemplatePath ${srcDir}/${testFiles})
+    if(NOT IS_DIRECTORY ${srcTemplatePath})
+        configure_file(
+                ${srcTemplatePath}
+                ${destDir}/${testFiles}
+                COPYONLY)
+    endif(NOT IS_DIRECTORY ${srcTemplatePath})
+endforeach(testFiles)
+
+
 #----------------------------------------------------------------------------
 # Add definitions for debug and compatibility
 #
