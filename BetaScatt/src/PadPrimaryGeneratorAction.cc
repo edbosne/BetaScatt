@@ -71,6 +71,7 @@ void PadPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   eTemp1X = Radius * cos(Phi);
   eTemp1Y = Radius * sin(Phi);
   
+  // TODO check if values need to be converted to radian
   eTemp2X = eTemp1X * cos(PhiRotation) - eTemp1Y * sin(PhiRotation);
   eTemp2Y = eTemp1X * sin(PhiRotation) + eTemp1Y * cos(PhiRotation);
   eTemp2Z = eTemp1Z;

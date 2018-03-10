@@ -485,6 +485,7 @@ void PadAnalysisManager::Step(const G4Step* aStep){
   G4double univY = position.y()/cm;
   G4double univZ = position.z()/cm;
 
+  // TODO check if angles need to be converted to radian
   G4double phi = dataPointer->GetPhiRotation();
   G4double theta = dataPointer->GetThetaRotation();
 
