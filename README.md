@@ -39,6 +39,8 @@ Several examples can be found in folder "BetaScatt/Test"
 Configuration values for the parameters MeanDepth and SigmaDepth
 need to be taken from TRIM simulation with the correct incidence angle
 
+The isotopes energy spectrum are set in bins of 1keV.
+
 ## Running a simulation
 
 To run a simulation locally do
