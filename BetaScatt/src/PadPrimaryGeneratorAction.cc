@@ -127,7 +127,7 @@ void PadPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   analysisPointer->BeginEnergy(eEnergy/keV);
 
   particleGun->SetParticleEnergy(eEnergy);
-  //std::cout<<"total E" <<eEnergy<<std::endl;
+  //std::cout<<"total E " << eEnergy/keV <<std::endl;
   // If StartingMomentum[0]=1 then a fixed momentum was given in the input
   // file, otherwise take random momentum direction.
 
