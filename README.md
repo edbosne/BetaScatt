@@ -60,6 +60,7 @@ In the example it is set to the current directory.
 - Ligia Amorim
 - Angelo Costa
 - Eric David Bosne
+- Tiago de Lemos Lima
 
 
 ## License
