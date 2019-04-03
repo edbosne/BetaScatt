@@ -80,6 +80,8 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   G4double fractionmass;
   G4double temperature, pressure;
 
+  // elements
+
   a = 1.01*g/mole;
   z = 1.;
   G4Element* elH = new G4Element(name="Hydrogen", symbol="H", z, a);
@@ -99,6 +101,10 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   a = 15.999*g/mole;
   z = 8.;
   G4Element* elO = new G4Element(name="Oxygen", symbol="O", z, a);
+
+  a = 18.998*g/mole;
+  z = 9.;
+  G4Element* elF = new G4Element(name="Fluorine", symbol="F", z, a);
 
   a = 26.982*g/mole;
   z = 13.;
@@ -168,6 +174,22 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   z = 49;
   G4Element* elIn = new G4Element(name="Indium", symbol="In", z, a);
 
+  a = 121.76*g/mole;
+  z = 51.;
+  G4Element* elSb = new G4Element(name="Antimony", symbol="Sb", z, a);
+
+  a = 127.6*g/mole;
+  z = 52.;
+  G4Element* elTe = new G4Element(name="Tellurium", symbol="Te", z, a);
+
+  a = 132.91*g/mole;
+  z = 55.;
+  G4Element* elCs = new G4Element(name="Cesium", symbol="Cs", z, a);
+
+  a = 137.3*g/mole;
+  z = 56.;
+  G4Element* elBa = new G4Element(name="Barium", symbol="Ba", z, a);
+
   a = 180.9479*g/mole;
   z = 73.;
   G4Element* elTa = new G4Element(name="Tantalum", symbol="Ta", z, a);
@@ -176,6 +198,7 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   z = 79.;
   G4Element* elAu = new G4Element(name="Gold", symbol="Au", z, a);
 
+  // Materials
 
   density = 2.700*g/cm3;
   G4Material* Al = new G4Material(name="Aluminum", density, ncomponents=1);
@@ -293,6 +316,40 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   SiC->AddElement(elSi, natoms=1);
   SiC->AddElement(elC, natoms=1);
 
+  density = 6.503*g/cm3;
+  G4Material* GeTe = new G4Material(name="Germanium Telluride", density, ncomponents=2);
+  GeTe->AddElement(elGe, natoms=1);
+  GeTe->AddElement(elTe, natoms=1);
+  
+  density = 5.614*g/cm3;
+  G4Material* GaSb = new G4Material(name="Gallium Antimonide", density, ncomponents=2);
+  GaSb->AddElement(elGa,natoms=1);
+  GaSb->AddElement(elSb,natoms=1);
+  
+  density = 4.138*g/cm3;
+  G4Material* GaP = new G4Material(name="Gallium Phosphide", density, ncomponents=2);
+  GaP->AddElement(elGa,natoms=1);
+  GaP->AddElement(elP,natoms=1);
+
+  density = 4.89*g/cm3;
+  G4Material* BaF2 = new G4Material(name="Barium Fluoride", density, ncomponents=2);
+  BaF2->AddElement(elBa, natoms=1);
+  BaF2->AddElement(elF, natoms=2);
+  
+  density = 5.72*g/cm3;
+  G4Material* BaO2 = new G4Material(name="Barium Oxide", density, ncomponents=2);
+  BaO2->AddElement(elBa, natoms=1);
+  BaO2->AddElement(elO, natoms=1);
+  
+  density = 4.64*g/cm3;
+  G4Material* CsF2 = new G4Material(name="Cesium Fluoride", density, ncomponents=2);
+  CsF2->AddElement(elCs, natoms=1);
+  CsF2->AddElement(elF, natoms=1);
+  
+  density = 3.53*g/cm3;
+  G4Material* Dia = new G4Material(name="Diamond", density, ncomponents=1);
+  Dia->AddElement(elC, natoms=1);
+
 
   //------------------------------------------------------------
   //           Choose Material for Film and Substrate
@@ -323,6 +380,20 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     FilmMaterial = SrTiO3;
   } else if (FilmMatString == "SiC"){
     FilmMaterial = SiC;
+  } else if (FilmMatString == "GaSb"){
+    FilmMaterial = GaSb;
+  } else if (FilmMatString == "GeTe"){
+    FilmMaterial = GeTe;
+  } else if (FilmMatString == "BaF2"){
+    FilmMaterial = BaF2;
+  } else if (FilmMatString == "BaO2"){
+    FilmMaterial = BaO2;
+  } else if (FilmMatString == "CsF2"){
+    FilmMaterial = CsF2;
+  } else if (FilmMatString == "Dia"){
+    FilmMaterial = Dia;
+  } else if (FilmMatString == "GaP"){
+    FilmMaterial = GaP;
   } else {
     logFile << "Material " << FilmMatString << " not implemented yet." 
 	    << G4endl << "Ask responsable person (Bart De Vries) " 
@@ -353,6 +424,22 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     SubstrateMaterial = AlN;
   } else if (SubstrateMatString == "InN"){
     SubstrateMaterial = InN;
+  } else if (SubstrateMatString == "GeTe"){
+    SubstrateMaterial = GeTe;
+  } else if (SubstrateMatString == "BaF2"){
+    SubstrateMaterial = BaF2;
+  } else if (SubstrateMatString == "BaO2"){
+    SubstrateMaterial = BaO2;
+  } else if (SubstrateMatString == "CsF2"){
+    SubstrateMaterial = CsF2;
+  } else if (SubstrateMatString == "Dia"){
+    SubstrateMaterial = Dia;
+  } else if (SubstrateMatString == "SrTiO3"){
+    SubstrateMaterial = SrTiO3;
+  } else if (SubstrateMatString == "GaSb"){
+    SubstrateMaterial = GaSb;
+  } else if (FilmMatString == "GaP"){
+    SubstrateMaterial = GaP;
   }else {
     logFile << "Material " << SubstrateMatString << " not implemented yet." 
 	    << G4endl << "Ask responsable person (Stefan Decoster) " 
