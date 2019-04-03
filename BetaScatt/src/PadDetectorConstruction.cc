@@ -386,9 +386,9 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     FilmMaterial = GeTe;
   } else if (FilmMatString == "BaF2"){
     FilmMaterial = BaF2;
-  } else if (FilmMatString == "BaO2"){
+  } else if (FilmMatString == "BaO"){
     FilmMaterial = BaO2;
-  } else if (FilmMatString == "CsF2"){
+  } else if (FilmMatString == "CsF"){
     FilmMaterial = CsF2;
   } else if (FilmMatString == "Dia"){
     FilmMaterial = Dia;

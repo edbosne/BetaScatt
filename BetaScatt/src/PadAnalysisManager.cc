@@ -514,6 +514,12 @@ void PadAnalysisManager::Step(const G4Step* aStep){
       ScatteringFlag[0] = 1;
       ScatteringFlag[3] = 1;
     }
+    // if it is a secondary particle
+    if (aStep->GetTrack()->GetParentID() != 0){
+      //std::cout << "This is a secondary particle in the film" << std::endl;
+      ScatteringFlag[0] = 1;
+      ScatteringFlag[3] = 1;
+    }
   }
 
   if ((NameVolume == "Substrate")  && (DetectorFlag[0] == 0)) {
