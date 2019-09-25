@@ -399,6 +399,8 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     FilmMaterial = BaO;
   } else if (FilmMatString == "CsF"){
     FilmMaterial = CsF;
+  } else if (FilmMatString == "CaF2"){
+    FilmMaterial = CaF2;
   } else if (FilmMatString == "Dia"){
     FilmMaterial = Dia;
   } else if (FilmMatString == "GaP"){
@@ -441,6 +443,8 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     SubstrateMaterial = BaO;
   } else if (SubstrateMatString == "CsF"){
     SubstrateMaterial = CsF;
+  } else if (SubstrateMatString == "CaF2"){
+    SubstrateMaterial = CaF2;
   } else if (SubstrateMatString == "Dia"){
     SubstrateMaterial = Dia;
   } else if (SubstrateMatString == "SrTiO3"){
