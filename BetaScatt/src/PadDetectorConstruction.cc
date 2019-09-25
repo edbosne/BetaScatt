@@ -118,6 +118,10 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   z = 15.;
   G4Element* elP = new G4Element(name="Phosphorus", symbol="P", z, a);
 
+  a = 40.078*g/mole;
+  z = 20.;
+  G4Element* elCa = new G4Element(name="Calcium", symbol="Ca", z, a);
+
   a = 47.867*g/mole;
   z = 22.;
   G4Element* elTi = new G4Element(name="Titanium", symbol="Ti", z, a);
@@ -337,14 +341,19 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   BaF2->AddElement(elF, natoms=2);
   
   density = 5.72*g/cm3;
-  G4Material* BaO2 = new G4Material(name="Barium Oxide", density, ncomponents=2);
-  BaO2->AddElement(elBa, natoms=1);
-  BaO2->AddElement(elO, natoms=1);
+  G4Material* BaO = new G4Material(name="Barium Oxide", density, ncomponents=2);
+  BaO->AddElement(elBa, natoms=1);
+  BaO->AddElement(elO, natoms=1);
   
   density = 4.64*g/cm3;
-  G4Material* CsF2 = new G4Material(name="Cesium Fluoride", density, ncomponents=2);
-  CsF2->AddElement(elCs, natoms=1);
-  CsF2->AddElement(elF, natoms=1);
+  G4Material* CsF = new G4Material(name="Cesium Fluoride", density, ncomponents=2);
+  CsF->AddElement(elCs, natoms=1);
+  CsF->AddElement(elF, natoms=1);
+
+  density = 3.18*g/cm3;
+  G4Material* CaF2 = new G4Material(name="Calcium Fluoride", density, ncomponents=2);
+  CaF2->AddElement(elCa, natoms=1);
+  CaF2->AddElement(elF, natoms=2);
   
   density = 3.53*g/cm3;
   G4Material* Dia = new G4Material(name="Diamond", density, ncomponents=1);
@@ -387,9 +396,9 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   } else if (FilmMatString == "BaF2"){
     FilmMaterial = BaF2;
   } else if (FilmMatString == "BaO"){
-    FilmMaterial = BaO2;
+    FilmMaterial = BaO;
   } else if (FilmMatString == "CsF"){
-    FilmMaterial = CsF2;
+    FilmMaterial = CsF;
   } else if (FilmMatString == "Dia"){
     FilmMaterial = Dia;
   } else if (FilmMatString == "GaP"){
@@ -428,10 +437,10 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
     SubstrateMaterial = GeTe;
   } else if (SubstrateMatString == "BaF2"){
     SubstrateMaterial = BaF2;
-  } else if (SubstrateMatString == "BaO2"){
-    SubstrateMaterial = BaO2;
-  } else if (SubstrateMatString == "CsF2"){
-    SubstrateMaterial = CsF2;
+  } else if (SubstrateMatString == "BaO"){
+    SubstrateMaterial = BaO;
+  } else if (SubstrateMatString == "CsF"){
+    SubstrateMaterial = CsF;
   } else if (SubstrateMatString == "Dia"){
     SubstrateMaterial = Dia;
   } else if (SubstrateMatString == "SrTiO3"){
