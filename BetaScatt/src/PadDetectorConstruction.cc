@@ -246,10 +246,16 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   Steel->AddElement(elNi, fractionmass=0.09);
 
   density = 1.370*g/cm3;
-  G4Material* Mylar = new G4Material(name="Mylar", density, ncomponents=6);
+  G4Material* Mylar = new G4Material(name="Mylar", density, ncomponents=3);
   Mylar->AddElement(elH, fractionmass=0.0419);
   Mylar->AddElement(elC, fractionmass=0.6250);
   Mylar->AddElement(elO, fractionmass=0.3330);
+  
+  density = 1.18*g/cm3;
+  G4Material* PMMA = new G4Material(name="PMMA", density, ncomponents=3); //acrylic
+  PMMA->AddElement(elH, natoms=8);
+  PMMA->AddElement(elC, natoms=2);
+  PMMA->AddElement(elO, natoms=5);
 
   G4double const mbar = 1.e-03 * bar;
   temperature = 293.*kelvin;
