@@ -6,16 +6,14 @@
 #include "G4VModularPhysicsList.hh"
 #include "G4ios.hh"
 
-
 #ifdef G4ANALYSIS_USE
-//#include <AIDA/IAnalysisFactory.h>
 #include <TFile.h>
 #include <TDirectory.h>
 #endif
 
+
 #include "PadAnalysisManager.hh"
 #include "PadDetectorConstruction.hh"
-//#include "PadPhysicsList.hh"
 #include "PadPrimaryGeneratorAction.hh"
 #include "PadRunAction.hh"
 #include "PadEventAction.hh"
@@ -25,8 +23,10 @@
 
 #include "Randomize.hh"
 
+
+// You can activate GEOMETRY_DEBUG by changing the comments on the last lines of the CMakeLists.txt file.
 #ifdef GEOMETRY_DEBUG
-#include "PadVisManager.hh"
+#include "G4VisExecutive.hh"
 #endif
 
 void WriteHelp() {
@@ -41,6 +41,7 @@ void WriteHelp() {
   G4cout << "can be found/written to.  Caution: if set, this path" << G4endl;
   G4cout << "argument will override the FilePath entry in the input" << G4endl;
   G4cout << "file." << G4endl << G4endl;
+
   G4cout << "More information on how to run the program can be found" << G4endl;
   G4cout << "in manual.pdf." << G4endl << G4endl;
 
@@ -93,8 +94,6 @@ std::cout << " CLHEP intitialization " << std::endl;
 
   // Construct analysis object if variable is set
 #ifdef G4ANALYSIS_USE
-//   AIDA::IAnalysisFactory* analysisFactory = AIDA_createAnalysisFactory();
-//   PadAnalysisManager* analysisManager = new PadAnalysisManager(dataObject,analysisFactory);
    TFile * file = new TFile (dataObject->GetHistogramFileName(),"RECREATE");
    PadAnalysisManager* analysisManager = new PadAnalysisManager(dataObject,file);
 #endif
@@ -116,7 +115,6 @@ std::cout << " Created file and analysisManager " << std::endl;
   physlist->SetDefaultCutValue(ParticleCut);
 
   runManager->SetUserInitialization(physlist);
-  //runManager->SetUserInitialization(new PadPhysicsList);
 
 #ifdef GDEBUG
 std::cout << " Set user initialization " << std::endl;
@@ -126,8 +124,8 @@ std::cout << " Set user initialization " << std::endl;
   // Mandatory user action class
   runManager->SetUserAction(new PadPrimaryGeneratorAction(dataObject, analysisManager));
 #endif
-  // Analysis routines to make histograms
 
+  // Analysis routines to make histograms
 #ifdef G4ANALYSIS_USE
   runManager->SetUserAction(new PadRunAction(analysisManager));
   runManager->SetUserAction(new PadEventAction(analysisManager));
@@ -149,6 +147,8 @@ std::cout << " runManager initialize " << std::endl;
 #endif
 
 #ifdef GEOMETRY_DEBUG
+  // Suggestion:
+  // run /control/execute vis.mac for a fast visualization setup.
   G4UIsession* session = new G4UIterminal(new G4UItcsh);
 #else
   // get the pointer to UI manager and set verbosities
@@ -162,7 +162,7 @@ std::cout << " G4UI verbosity "  << std::endl;
 
 
 #ifdef GEOMETRY_DEBUG
-  G4VisManager* visManager = new PadVisManager;
+  G4VisManager* visManager = new G4VisExecutive;
   visManager->Initialize();
 #endif
 
@@ -190,7 +190,6 @@ std::cout << " Ending job. " << std::endl;
 #ifdef G4ANALYSIS_USE
   delete analysisManager;
 
-
 //  delete analysisFactory;
   file->Write(0, TObject::kOverwrite);
   file->Close();
@@ -206,6 +205,4 @@ std::cout << " Ending job. " << std::endl;
 
   return 0;
 }
-
-
 
