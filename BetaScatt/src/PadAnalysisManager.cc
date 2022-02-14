@@ -516,6 +516,10 @@ void PadAnalysisManager::Step(const G4Step* aStep){
     }
     // if it is a secondary particle
     if (aStep->GetTrack()->GetParentID() != 0){
+      // Important note:
+      // Secondary particles are only processed after the primary particle is finished.
+      // This part is never processed in the relevant events when the primary particle reaches the detector
+      // Turning off (DetectorFlag[0] == 0) could solve this, but the effective change is only about 0.1%
       //std::cout << "This is a secondary particle in the film" << std::endl;
       ScatteringFlag[0] = 1;
       ScatteringFlag[3] = 1;
