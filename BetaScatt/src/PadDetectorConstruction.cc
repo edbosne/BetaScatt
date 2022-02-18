@@ -481,6 +481,8 @@ G4VPhysicalVolume* PadDetectorConstruction::Construct()
   G4VisAttributes* cyanVisAtt = new G4VisAttributes(G4Colour(0.,1.,1.));
   G4VisAttributes* magentaVisAtt = new G4VisAttributes(G4Colour(1.,0.,1.));
   G4VisAttributes* yellowVisAtt = new G4VisAttributes(G4Colour(1.,1.,0.));
+  G4VisAttributes* orangeVisAtt = new G4VisAttributes(G4Colour(1.,0.5,0.));
+  G4VisAttributes* pinkVisAtt = new G4VisAttributes(G4Colour(0.5,0.3,0.7));
 
 
 
