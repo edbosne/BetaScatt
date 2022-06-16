@@ -100,9 +100,8 @@ endforeach(testFiles)
 #----------------------------------------------------------------------------
 # Add definitions for debug and compatibility
 #
-add_definitions(-DG4ANALYSIS_USE -DGEOMETRY_DEBUG -DGDEBUG)
-#add_definitions(-DG4ANALYSIS_USE -DGDEBUG)
-
+#add_definitions(-DG4ANALYSIS_USE -DGEOMETRY_DEBUG -DGDEBUG)
+add_definitions(-DG4ANALYSIS_USE -DGDEBUG)
 
 
 
